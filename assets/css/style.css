@@ -1,0 +1,89 @@
+*, *::after, *::before {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+* {
+    border: 1px solid red;
+}
+main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#gameWindow {
+    width: 90%;
+    height: 400px;
+    display: grid;
+    grid-template-areas:
+        "topbox topbox"
+        "word alphabet"
+        "word status"
+    ;
+    padding: 10px;
+    gap: 20px;
+    grid-template-rows: 50% 25% 15%;
+}
+
+#banner {
+    height: 150px;
+    position: relative;
+    grid-area: topbox;
+}
+
+#timer {
+    width: 200px;
+    height: 80px;
+    position: absolute;
+    bottom: -40px;
+    left: calc(50% - 100px);
+    border-radius: 25%;
+    z-index: 2;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 32px;
+}
+
+#word {
+    grid-area: word;
+    letter-spacing: 4px;
+    font-size: 32px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#alphabet {
+    grid-area: alphabet;
+    position: relative;
+}
+
+#alphabet-string {
+    width: fit-content;
+    margin: 20px auto 0px auto;
+    text-align: center;
+    letter-spacing: 3px;
+    font-size: 24px;
+}
+
+#start-game {
+    width: 60px;
+    height: 30px;
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+}
+
+#status {
+    grid-area: status;
+}
+
+#scoreboard {
+    width: 60%;
+    height: 50px;
+}
