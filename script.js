@@ -10,10 +10,13 @@ let wordArray = ["computer", "jelly", "boogie"];
 let activeWord;
 let hiddenWord;
 let timer = 40;
+let isPlaying = false;
 
 _startButton.addEventListener("click", () => {
-    startUp();
-    startTimer();
+    if(!isPlaying){
+        startUp();
+        startTimer();
+    }
 })
 
 document.querySelector("body").addEventListener("keypress", (event) => {
@@ -28,17 +31,20 @@ document.querySelector("body").addEventListener("keypress", (event) => {
 })
 
 function startUp() {
+    isPlaying = true;
     activeWord = wordArray[Math.floor(Math.random() * wordArray.length)];
     hiddenWord = new Array(activeWord.length);
     hiddenWord.fill("_");
+    alphabet = "abcdefghijklmnopqrstuvwxyz";
     _alphabet.textContent = alphabet;
     _word.textContent = hiddenWord.join("");
 }
 
 function checkLetter(keyPressed) {
+    alphabet = alphabet.replace(keyPressed, "");
+    _alphabet.textContent = alphabet;
+
     if(activeWord.includes(keyPressed)){
-        alphabet = alphabet.replace(keyPressed, "");
-        _alphabet.textContent = alphabet;
         for(let i = 0; i < activeWord.length; i++) {
             if(activeWord.charAt(i) === keyPressed){
                 hiddenWord[i] = keyPressed;
@@ -47,11 +53,23 @@ function checkLetter(keyPressed) {
         _word.textContent = hiddenWord.join("");
     } else {
         timer -= 5;
-        _timer.textContent = timer;
+        if(timer > 0){
+            _timer.textContent = timer;
+        } else {
+            timer = 0;
+            _timer.textContent = timer;
+            isPlaying = false;
+        }
+    }
+    if(hiddenWord.join("") === activeWord){
+        gameOver("win");
     }
 }
 
 function startTimer() {
+    if(timer != 40){
+        timer = 40;
+    }
     _timer.textContent = timer;
 
     let countdown = setInterval(() => {
@@ -59,11 +77,25 @@ function startTimer() {
             timer--;
             _timer.textContent = timer;
         }
-        else {
+        else if(timer === 0 && isPlaying === true){
             clearInterval(countdown);
-            alert("Game Over!");
+            gameOver();
+            return;
+        } else {
+            clearInterval(countdown);
         }
     }, "1000");
+}
+
+function gameOver(gameStatus) {
+    isPlaying = false;
+    if(gameStatus === undefined){
+        alert("You lose :(");
+    } else {
+        alert("You win!");
+    }
+    timer = 0;
+    _timer.textContent = timer;
 }
 
 //Start the game by clicking a button
