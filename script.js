@@ -6,9 +6,9 @@ let _status = document.querySelector("#status");
 let _scoreboard = document.querySelector("#scoreboard");
 
 let alphabet = "abcdefghijklmnopqrstuvwxyz";
-let wordArray = [];
-let activeWord = "testword";
-let hiddenWord = new Array(activeWord.length);
+let wordArray = ["computer", "jelly", "boogie"];
+let activeWord;
+let hiddenWord;
 let timer = 40;
 
 _startButton.addEventListener("click", () => {
@@ -28,8 +28,10 @@ document.querySelector("body").addEventListener("keypress", (event) => {
 })
 
 function startUp() {
-    _alphabet.textContent = alphabet;
+    activeWord = wordArray[Math.floor(Math.random() * wordArray.length)];
+    hiddenWord = new Array(activeWord.length);
     hiddenWord.fill("_");
+    _alphabet.textContent = alphabet;
     _word.textContent = hiddenWord.join("");
 }
 
